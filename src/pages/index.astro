@@ -1,11 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Placeholder from '../components/pages/Placeholder.astro';
+import HomePage from '../components/pages/HomePage.astro';
 import { seo } from '../data/seo';
+import { mobileApplication } from '../lib/schema';
 
 const { title, description } = seo.pt.app;
 ---
 
-<BaseLayout page="app" title={title} description={description}>
-  <Placeholder title="Koti" />
+<BaseLayout page="app" title={title} description={description} graph={[mobileApplication(Astro.site!, new URL('/', Astro.site).href, description)]}>
+  <HomePage />
 </BaseLayout>

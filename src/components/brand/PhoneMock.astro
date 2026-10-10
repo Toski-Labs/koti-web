@@ -1,0 +1,78 @@
+---
+/** Tela Hoje do Koti num iPhone ilustrado (sem barra de status). Acompanha o tema do site. */
+import { getLang } from '../../i18n/ui';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+
+type Tag = 'list' | 'chore' | 'bill';
+const copy = {
+  pt: {
+    aria: 'Tela Hoje do app: João no mercado, tarefas e contas da casa',
+    house: 'Casa da Ana e João', title: 'Hoje', now: 'João está no Atacadão', nowSub: 'Compra do mês · 8 de 15', forYou: 'Pra você',
+    items: [['Limpar o banheiro', 'Tarefa · sua vez', 'chore'], ['Luz · R$ 180', 'Conta · vence domingo', 'bill'], ['Farmácia', 'Lista · 1 de 4', 'list']] as [string, string, Tag][],
+    tabs: ['Hoje', 'Listas', 'Agenda', 'Casa'],
+  },
+  en: {
+    aria: 'Today screen: João at the store, chores and bills',
+    house: 'Ana and João’s home', title: 'Today', now: 'João is at the store', nowSub: 'Monthly groceries · 8 of 15', forYou: 'For you',
+    items: [['Clean the bathroom', 'Chore · your turn', 'chore'], ['Power · R$ 180', 'Bill · due Sunday', 'bill'], ['Pharmacy', 'List · 1 of 4', 'list']] as [string, string, Tag][],
+    tabs: ['Today', 'Lists', 'Agenda', 'Home'],
+  },
+}[lang];
+
+const tagClass: Record<Tag, string> = {
+  list: 'bg-tag-list-bg text-tag-list',
+  chore: 'bg-tag-chore-bg text-tag-chore',
+  bill: 'bg-tag-bill-bg text-tag-bill',
+};
+/** Ícones da barra de abas (Hoje, Listas, Agenda, Casa), iguais ao canvas. */
+const tabIcons = [
+  'M4 11l8-6.5 8 6.5M12 15v4.5',
+  'M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01',
+  'M3.5 5h17v15.5h-17zM3.5 10h17M8 3v4M16 3v4',
+  'M9 6a3.2 3.2 0 1 0 0.01 0M3.5 19c.8-3.2 3-4.8 5.5-4.8s4.7 1.6 5.5 4.8M16.5 7.5a2.6 2.6 0 1 0 0.01 0M14.5 15c2.4-.4 4.6.8 5.5 3.6',
+];
+---
+
+<div role="img" aria-label={copy.aria} class:list={['relative w-75 rounded-[48px] bg-phone-bezel p-2.5 shadow-[0_24px_60px_rgba(35,27,23,0.22)] ring-1 ring-phone-ring', className]}>
+  <div class="flex h-150 flex-col overflow-hidden rounded-[38px] bg-background" aria-hidden="true">
+    <div class="flex grow flex-col gap-2.5 overflow-hidden px-3.5 pt-10">
+      <div class="flex items-center justify-between">
+        <span class="text-[11px] font-semibold text-muted">{copy.house}</span>
+        <span class="flex size-6.5 items-center justify-center rounded-full bg-ameixa-claro text-xs font-semibold text-carvao">A</span>
+      </div>
+      <span class="text-[26px] font-semibold tracking-[-0.01em]">{copy.title}</span>
+      <div class="flex flex-col gap-2 rounded-2xl bg-feature-card p-3 text-on-feature-card">
+        <div class="flex items-center gap-2">
+          <span class="flex size-7 items-center justify-center rounded-full bg-caramelo text-xs font-semibold text-carvao">J</span>
+          <span class="flex flex-col"><span class="text-[13px] font-semibold">{copy.now}</span><span class="text-[11px] opacity-85">{copy.nowSub}</span></span>
+        </div>
+        <span class="block h-1.25 rounded-full bg-on-feature-card/25"><span class="block h-1.25 w-[53%] rounded-full bg-on-feature-card"></span></span>
+      </div>
+      <span class="mt-1 text-[10px] font-semibold tracking-[0.06em] text-muted uppercase">{copy.forYou}</span>
+      {copy.items.map(([title, tag, kind]) => (
+        <div class="flex items-center gap-2.5 rounded-[14px] bg-surface px-3 py-2.5">
+          <span class="size-5 shrink-0 rounded-full border-2 border-line"></span>
+          <span class="flex min-w-0 grow flex-col items-start gap-0.75">
+            <span class="text-[13px] font-semibold">{title}</span>
+            <span class:list={['rounded-full px-1.5 py-px text-[10px] font-semibold', tagClass[kind]]}>{tag}</span>
+          </span>
+        </div>
+      ))}
+    </div>
+    <div class="grid h-16 shrink-0 grid-cols-4 border-t border-line bg-tabbar px-2 pt-2 pb-3.5">
+      {copy.tabs.map((tab, i) => (
+        <span class:list={['flex flex-col items-center justify-center gap-0.75 text-[10px]', i === 0 ? 'font-semibold text-accent' : 'font-medium text-tab-idle']}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d={tabIcons[i]}></path>
+          </svg>
+          {tab}
+        </span>
+      ))}
+    </div>
+  </div>
+</div>

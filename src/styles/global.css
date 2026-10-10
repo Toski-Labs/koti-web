@@ -19,20 +19,46 @@
   --toski-on-feature-card: #fff8ee;
   --toski-phone-bezel: #1b1511; /* moldura do iPhone ilustrado */
   --toski-footer-accent: #d9a6cc; /* destaque do produto sobre o rodapé, que é escuro nos dois temas */
+  --toski-tag-list: #7a3f6e; /* selos Lista, Tarefa e Conta do celular ilustrado */
+  --toski-tag-list-bg: #f0e1ec;
+  --toski-tag-chore: #3f6e3b;
+  --toski-tag-chore-bg: #e3ebdd;
+  --toski-tag-bill: #94481a;
+  --toski-tag-bill-bg: #fbefdf;
+  --toski-ameixa-claro: #d9a6cc; /* avatar de quem mora na casa (members.ameixa-claro do DS) */
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --toski-feature-card: #5e2f55;
+    --toski-tag-list: #231b17;
+    --toski-tag-list-bg: #d9a6cc;
+    --toski-tag-chore: #231b17;
+    --toski-tag-chore-bg: #d9a6cc;
+    --toski-tag-bill: #231b17;
+    --toski-tag-bill-bg: #d9a6cc;
   }
 }
 :root[data-theme="dark"] {
   --toski-feature-card: #5e2f55;
+  --toski-tag-list: #231b17;
+  --toski-tag-list-bg: #d9a6cc;
+  --toski-tag-chore: #231b17;
+  --toski-tag-chore-bg: #d9a6cc;
+  --toski-tag-bill: #231b17;
+  --toski-tag-bill-bg: #d9a6cc;
 }
 @theme inline {
   --color-feature-card: var(--toski-feature-card);
   --color-on-feature-card: var(--toski-on-feature-card);
   --color-phone-bezel: var(--toski-phone-bezel);
   --color-footer-accent: var(--toski-footer-accent);
+  --color-tag-list: var(--toski-tag-list);
+  --color-tag-list-bg: var(--toski-tag-list-bg);
+  --color-tag-chore: var(--toski-tag-chore);
+  --color-tag-chore-bg: var(--toski-tag-chore-bg);
+  --color-tag-bill: var(--toski-tag-bill);
+  --color-tag-bill-bg: var(--toski-tag-bill-bg);
+  --color-ameixa-claro: var(--toski-ameixa-claro);
 }
 
 /*

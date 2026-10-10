@@ -1,0 +1,318 @@
+---
+/** Home (PT e EN). Layout e medidas do canvas "Koti · Design" › Site. */
+import { Button, buttonClasses, Card, CheckList, Icon, SectionHeading } from '@toski-labs/ds';
+import Art from '../brand/Art.astro';
+import PhoneMock from '../brand/PhoneMock.astro';
+import { appIcon } from '../../lib/art';
+import { anchors, getLang, href } from '../../i18n/ui';
+
+const lang = getLang(Astro.currentLocale);
+const ids = anchors[lang];
+
+/** Ícones de traço dos recursos (24 × 24), iguais ao canvas. */
+const icons = {
+  live: 'M5 12.5l4.5 4.5L19 7.5M4 4h16v16H4z',
+  cart: 'M3 4h2.5l2.2 11h10.6l2-8H7M9.5 19.5h.01M17 19.5h.01',
+  turn: 'M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5',
+  bill: 'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6',
+  cal: 'M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5ZM4 9.5h16M8.5 2.5v3M15.5 2.5v3',
+  scale: 'M12 4v16M5 20h14M6 8l-3 6h6zM18 8l-3 6h6zM6 8h12',
+};
+type IconKey = keyof typeof icons;
+
+const t = {
+  pt: {
+    tagline: 'Nossa casa, juntos.',
+    body: 'O app para casal ou quem divide casa organizar listas, tarefas e contas. O que um marca, o outro vê na hora.',
+    soon: 'Em breve na App Store',
+    seePlans: 'Ver os planos',
+    requirement: 'Para iPhone com iOS 18 ou mais recente. Quem mora com você e não tem iPhone entra pelo navegador.',
+    mockAria: 'Tela Hoje do app: João no mercado, tarefas e contas da casa',
+    featKicker: 'Recursos',
+    featTitle: 'Lista de compras, tarefas e contas da casa, compartilhadas',
+    features: [
+      ['live', 'Lista de compras compartilhada, ao vivo', 'Um marca o leite e o outro vê na hora, com a cor de quem marcou. Com o app fechado, chega um aviso só, nunca um por item.'],
+      ['cart', 'Lista de mercado em tempo real', 'Quem vai compra; quem ficou em casa adiciona o que faltou sem ligar. Itens por corredor e "Não tinha" com um toque.'],
+      ['turn', 'Tarefas de casa com rodízio', 'Lixo, louça e plantas se repetem sozinhos e o Koti sabe de quem é a vez. Quem não puder passa a vez com um botão.'],
+      ['bill', 'Contas da casa com boleto e Pix', 'Cada conta guarda o código para colar no app do banco, lembra o vencimento e avisa a casa quando alguém paga.'],
+      ['cal', 'Agenda da casa', 'Tarefas, contas, eventos e prazos das listas numa linha do tempo, e no Calendário do iPhone ou no Google, se quiser.'],
+      ['scale', 'Dividir as contas e acertar no Pix', 'Divida igual, por porcentagem ou valor fixo. O Koti mostra quem deve quanto e manda o Pix na hora de acertar.'],
+    ] as [IconKey, string, string][],
+    mktKicker: 'Destaque',
+    mktTitle: 'Ninguém precisa ligar do mercado',
+    mktBody: 'Quem vai ao mercado toca em "Estou indo". A casa recebe o aviso e pode pedir mais alguma coisa respondendo a própria notificação.',
+    mktList: ['Itens grandes, por corredor, um toque para marcar', '"Não tinha" volta sozinho na próxima lista', 'Progresso na tela bloqueada e na Dynamic Island', 'Valor da compra entra no saldo da casa'],
+    mktAria: 'Live Activity com 8 de 15 itens e notificação para adicionar um item',
+    laTitle: 'Compra do mês', laNext: 'Próximo: Queijo minas', laNew: '+ Pão, por João',
+    push: 'Ana está no Atacadão. Quer adicionar algo à Compra do mês?', reply: 'pão de forma',
+    pwaKicker: 'Sem iPhone',
+    pwaTitle: 'Quem mora com você também entra, mesmo sem iPhone',
+    pwaBody: 'No Android ou no computador, o Koti abre no navegador com as mesmas listas, tarefas e contas, ao vivo. Não precisa baixar nada.',
+    pwaSteps: [
+      ['Receba o convite', 'Quem tem iPhone cria a casa e manda o link pelo WhatsApp.'],
+      ['Entre com Google ou e-mail', 'Sem senha: um toque e o convite já está aceito.'],
+      ['Ponha na tela inicial', 'O navegador oferece instalar: abre em tela cheia, como um app.'],
+      ['Receba os avisos', 'O mesmo aviso agrupado do iPhone, incluindo "Ana está no mercado".'],
+    ],
+    plansKicker: 'Grátis e Plus',
+    plansTitle: 'Grátis para casal; Plus para a casa toda',
+    plansLead: 'O grátis tem o Koti inteiro para duas pessoas. O Plus é para a casa que cresce, e uma assinatura vale para todo mundo.',
+    freeName: 'Grátis',
+    freeSub: 'Para um casal ou duas pessoas',
+    freeList: ['2 pessoas por casa', 'Listas, tarefas, contas e agenda sem limite', 'Modo mercado ao vivo', 'Saldo e acertos entre vocês'],
+    plusSub: 'Para a casa toda',
+    plusBadge: 'Uma assinatura, a casa toda',
+    plusList: ['Até 6 pessoas por casa', 'Calendário do iPhone e Google Agenda', 'Resumo do mês com gastos por categoria', 'Retrospectiva do ano da casa', 'Vale para todos que moram juntos', 'Ícones alternativos'],
+    // Preços ainda não definidos: aparecem no lançamento, junto com a App Store.
+    prices: [
+      { name: 'Mensal', price: 'Em breve', sub: 'cobrança mensal', featured: false },
+      { name: 'Anual', price: 'Em breve', sub: 'cobrança anual', featured: true },
+    ],
+    pricesNote: 'Os preços saem junto com o lançamento do app na App Store.',
+    detTitle: 'Detalhes',
+    details: [['Aparelho', 'iPhone com iOS 18 ou mais recente'], ['Sem iPhone', 'Navegador no Android ou no computador, por convite'], ['Idiomas', 'Português (Brasil) e inglês'], ['Entrar com', 'Apple ou Google; e-mail no navegador'], ['Seus dados', 'Só quem mora na casa vê']],
+    helpTitle: 'Ficou alguma dúvida?',
+    helpBody: 'Veja as perguntas frequentes ou fale com a gente.',
+    support: 'Suporte',
+    privacy: 'Privacidade',
+  },
+  en: {
+    tagline: 'Our home, together.',
+    body: 'The app for couples and housemates to share lists, chores and bills. What one checks off, the other sees right away.',
+    soon: 'Coming soon to the App Store',
+    seePlans: 'See plans',
+    requirement: 'For iPhone with iOS 18 or later. Housemates without an iPhone join from the browser.',
+    mockAria: 'Today screen: João at the store, chores and bills',
+    featKicker: 'Features',
+    featTitle: 'Shared grocery lists, chores and household bills',
+    features: [
+      ['live', 'Shared grocery list, live', 'One checks off the milk and the other sees it instantly, in that person’s color. With the app closed, you get one alert, never one per item.'],
+      ['cart', 'Real-time grocery list at the store', 'Whoever goes shops; whoever stays home adds what’s missing without calling. Items by aisle and "Out of stock" in one tap.'],
+      ['turn', 'Chore rotation for the home', 'Trash, dishes and plants repeat on their own and Koti knows whose turn it is. Can’t make it? Pass your turn with one button.'],
+      ['bill', 'Household bills with boleto and Pix', 'Each bill keeps the code to paste into your bank app, reminds you of the due date and tells everyone when it’s paid.'],
+      ['cal', 'Home agenda', 'Chores, bills, events and list deadlines on one timeline, and in your iPhone or Google Calendar if you want.'],
+      ['scale', 'Split bills and settle up with Pix', 'Split evenly, by percentage or fixed amounts. Koti shows who owes what and sends the Pix when it’s time to settle.'],
+    ] as [IconKey, string, string][],
+    mktKicker: 'Highlight',
+    mktTitle: 'No more calls from the grocery store',
+    mktBody: 'Whoever goes shopping taps "I’m heading out". Everyone at home gets an alert and can add something by replying to the notification.',
+    mktList: ['Big items by aisle, one tap to check', '"Out of stock" comes back on the next list', 'Progress on the Lock Screen and Dynamic Island', 'The total goes into the household balance'],
+    mktAria: 'Live Activity with 8 of 15 items and a notification to add an item',
+    laTitle: 'Monthly groceries', laNext: 'Next: Cheese', laNew: '+ Bread, by João',
+    push: 'Ana is at Atacadão. Want to add anything to Monthly groceries?', reply: 'sliced bread',
+    pwaKicker: 'No iPhone',
+    pwaTitle: 'Your housemates can join too, even without an iPhone',
+    pwaBody: 'On Android or a computer, Koti opens in the browser with the same lists, chores and bills, live. Nothing to download.',
+    pwaSteps: [
+      ['Get the invite', 'Someone with an iPhone creates the home and sends the link.'],
+      ['Sign in with Google or email', 'No password: one tap and you’re in.'],
+      ['Add it to your home screen', 'The browser offers to install it: full screen, like an app.'],
+      ['Get the alerts', 'The same grouped alerts as on iPhone, including "Ana is at the store".'],
+    ],
+    plansKicker: 'Free and Plus',
+    plansTitle: 'Free for couples; Plus for the whole home',
+    plansLead: 'Free has all of Koti for two people. Plus is for a growing household, and one subscription covers everyone.',
+    freeName: 'Free',
+    freeSub: 'For a couple or two housemates',
+    freeList: ['2 people per home', 'Unlimited lists, chores, bills and agenda', 'Live grocery mode', 'Balance and settling up'],
+    plusSub: 'For the whole household',
+    plusBadge: 'One subscription, whole home',
+    plusList: ['Up to 6 people per home', 'iPhone Calendar and Google Calendar', 'Monthly summary with spending by category', 'Year in review for your home', 'Covers everyone who lives together', 'Alternate icons'],
+    prices: [
+      { name: 'Monthly', price: 'Soon', sub: 'billed monthly', featured: false },
+      { name: 'Yearly', price: 'Soon', sub: 'billed yearly', featured: true },
+    ],
+    pricesNote: 'Prices will be announced when the app launches on the App Store.',
+    detTitle: 'Details',
+    details: [['Device', 'iPhone with iOS 18 or later'], ['No iPhone', 'Browser on Android or computer, by invite'], ['Languages', 'English and Portuguese (Brazil)'], ['Sign in with', 'Apple or Google; email in the browser'], ['Your data', 'Only people in your home can see it']],
+    helpTitle: 'Questions?',
+    helpBody: 'Check the FAQ or get in touch.',
+    support: 'Support',
+    privacy: 'Privacy',
+  },
+}[lang];
+
+const kicker = 'text-[13px] font-semibold tracking-[0.06em] text-accent-text uppercase';
+const h2 = 'text-[clamp(30px,3.6vw,42px)] leading-[1.1] font-semibold tracking-[-0.02em]';
+---
+
+<!-- Topo -->
+<section aria-labelledby="inicio-titulo" class="page flex flex-wrap items-center gap-10 pt-4 pb-16 sm:pt-8 md:flex-nowrap md:gap-14 md:pb-24">
+  <div class="flex min-w-0 flex-[1_1_360px] flex-col gap-5 sm:gap-5.5">
+    <Art items={appIcon('hero', 96)} class="shrink-0 self-start overflow-hidden rounded-[22%] [&_svg]:size-16 sm:[&_svg]:size-24" />
+    <div class="flex flex-col gap-3">
+      <h1 id="inicio-titulo" class="text-[clamp(40px,5.2vw,64px)] leading-[1.04] font-semibold tracking-tight">Koti</h1>
+      <p class="max-w-130 text-xl leading-[1.4] font-medium sm:text-[22px]">{t.tagline}</p>
+      <p class="max-w-130 text-[17px] leading-[1.55] text-muted">{t.body}</p>
+    </div>
+    <div class="mt-1 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+      <!-- Ainda sem link da App Store: não é botão nem link. -->
+      <span class={buttonClasses('primary', 'lg', 'pointer-events-none cursor-default justify-center max-sm:h-12 max-sm:text-base')}>
+        <Icon name="clock" size={20} />{t.soon}
+      </span>
+      <Button href={`#${ids.plans}`} variant="secondary" className="justify-center max-sm:h-12 max-sm:text-base">{t.seePlans}</Button>
+    </div>
+    <p class="text-sm text-muted">{t.requirement}</p>
+  </div>
+  <div class="flex min-w-0 flex-[1_1_300px] justify-center">
+    <div class="relative flex w-full max-w-115 justify-center py-7 max-sm:py-4">
+      <div class="absolute top-1/2 left-1/2 aspect-square w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-hero" aria-hidden="true"></div>
+      <PhoneMock class="max-sm:zoom-[0.8]" />
+    </div>
+  </div>
+</section>
+
+<!-- Recursos -->
+<section id={ids.features} aria-labelledby="recursos-titulo" class="page flex scroll-mt-6 flex-col gap-6 pb-16 sm:gap-8 sm:pb-26">
+  <SectionHeading id="recursos-titulo" kicker={t.featKicker} title={t.featTitle} />
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-3 sm:gap-5">
+    {
+      t.features.map(([icon, title, body]) => (
+        <Card variant="surface" className="flex gap-4 p-5 sm:flex-col sm:gap-3 sm:p-7">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-tint text-accent-text sm:size-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d={icons[icon]} />
+            </svg>
+          </span>
+          <div class="flex min-w-0 flex-col gap-1 sm:gap-3">
+            <h3 class="text-lg font-semibold sm:mt-1 sm:text-xl">{title}</h3>
+            <p class="text-[15px] leading-normal text-muted sm:text-base">{body}</p>
+          </div>
+        </Card>
+      ))
+    }
+  </div>
+</section>
+
+<!-- Destaque: mercado -->
+<section id={ids.market} aria-labelledby="mercado-titulo" class="page scroll-mt-6 pb-16 sm:pb-26">
+  <div class="flex flex-wrap items-center gap-x-16 gap-y-10 rounded-4xl bg-hero p-6 sm:p-12">
+    <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-4.5">
+      <p class={kicker}>{t.mktKicker}</p>
+      <h2 id="mercado-titulo" class="text-[clamp(30px,3.6vw,44px)] leading-[1.08] font-semibold tracking-[-0.02em] text-balance">{t.mktTitle}</h2>
+      <p class="max-w-130 text-base leading-[1.55] text-muted sm:text-lg">{t.mktBody}</p>
+      <ul role="list" class="mt-1 flex flex-col gap-3">
+        {
+          t.mktList.map((item) => (
+            <li class="flex gap-3 text-base leading-[1.45]">
+              <Icon name="check" size={20} stroke={2.4} className="mt-px shrink-0 text-accent-text" />
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="flex min-w-0 flex-[1_1_320px] flex-col items-center gap-3.5">
+      <!-- Live Activity: sempre escura, como na tela de bloqueio do iPhone. -->
+      <div role="img" aria-label={t.mktAria} class="flex w-full max-w-90 flex-col gap-3 rounded-3xl bg-[rgb(30_20_28/0.9)] px-4.5 py-4 text-white shadow-[0_18px_44px_rgba(35,27,23,0.2)]">
+        <div class="flex items-center justify-between">
+          <span class="flex items-center gap-2 text-[15px] font-semibold">
+            <span class="flex size-7 items-center justify-center rounded-lg bg-[#7a3f6e]">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFF8EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={icons.cart} /></svg>
+            </span>
+            {t.laTitle}
+          </span>
+          <b class="text-xl text-[#d9a6cc]">{lang === 'pt' ? '8 de 15' : '8 of 15'}</b>
+        </div>
+        <span class="block h-1.5 rounded-full bg-white/20"><span class="block h-1.5 w-[53%] rounded-full bg-[#d9a6cc]"></span></span>
+        <div class="flex justify-between text-sm"><span class="opacity-80">{t.laNext}</span><span class="text-[#e8c2dd]">{t.laNew}</span></div>
+      </div>
+      <div class="flex w-full max-w-90 flex-col gap-2 rounded-[20px] bg-surface px-3.5 py-3 shadow-[0_10px_28px_rgba(35,27,23,0.1)]">
+        <div class="flex items-start gap-2.5">
+          <Art items={appIcon('push', 32)} class="shrink-0 overflow-hidden rounded-lg" />
+          <span class="flex flex-col gap-0.5 text-sm leading-[1.35]"><b class="font-semibold">Koti</b><span>{t.push}</span></span>
+        </div>
+        <span class="flex h-9.5 items-center rounded-full border border-line px-3.5 text-sm text-muted">{t.reply}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sem iPhone -->
+<section id={lang === 'pt' ? 'sem-iphone' : 'no-iphone'} aria-labelledby="pwa-titulo" class="page flex scroll-mt-6 flex-col gap-6 pb-16 sm:gap-8 sm:pb-26">
+  <div class="flex flex-col gap-2.5">
+    <p class={kicker}>{t.pwaKicker}</p>
+    <h2 id="pwa-titulo" class:list={[h2, 'max-w-180']}>{t.pwaTitle}</h2>
+    <p class="max-w-160 text-[17px] leading-normal text-muted">{t.pwaBody}</p>
+  </div>
+  <ol role="list" class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,240px),1fr))] gap-5">
+    {
+      t.pwaSteps.map(([title, body], i) => (
+        <Card as="li" variant="surface" className="flex flex-col gap-2.5 p-6">
+          <span class="flex size-9 items-center justify-center rounded-full bg-accent text-base font-semibold text-on-accent">{i + 1}</span>
+          <b class="text-lg font-semibold">{title}</b>
+          <span class="text-[15px] leading-normal text-muted">{body}</span>
+        </Card>
+      ))
+    }
+  </ol>
+</section>
+
+<!-- Grátis e Plus -->
+<section id={ids.plans} aria-labelledby="planos-titulo" class="band scroll-mt-6 bg-tint">
+  <div class="page flex flex-col gap-7 py-14 sm:gap-9 sm:py-22">
+    <SectionHeading id="planos-titulo" kicker={t.plansKicker} title={t.plansTitle} lead={t.plansLead} />
+    <div class="flex flex-wrap items-stretch gap-4 sm:gap-6">
+      <Card variant="plain" radius="panel" className="flex min-w-0 flex-[1_1_300px] flex-col gap-5 p-6 sm:p-8">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-2xl font-semibold">{t.freeName}</h3>
+          <p class="text-[15px] text-muted">{t.freeSub}</p>
+        </div>
+        <CheckList items={t.freeList} tone="success" />
+      </Card>
+      <Card variant="plain" radius="panel" className="flex min-w-0 flex-[2_1_480px] flex-col gap-5 border-2 border-accent p-6 sm:gap-5.5 sm:p-8">
+        <div class="flex flex-wrap items-center justify-between gap-2.5">
+          <div class="flex flex-col gap-1.5">
+            <h3 class="text-2xl font-semibold">Koti Plus</h3>
+            <p class="text-[15px] text-muted">{t.plusSub}</p>
+          </div>
+          <span class="inline-flex h-8 items-center rounded-full bg-accent px-3.5 text-sm font-semibold text-on-accent">{t.plusBadge}</span>
+        </div>
+        <CheckList items={t.plusList} columns />
+        <!-- Preços: no celular cada plano é uma linha (nome e detalhe à esquerda, preço à direita). -->
+        <ul role="list" class="grid gap-2.5 sm:grid-cols-[repeat(auto-fit,minmax(150px,1fr))] sm:gap-3">
+          {
+            t.prices.map((p) => (
+              <li
+                class:list={[
+                  'grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-0.5 rounded-2xl border-[1.5px] px-4 py-3 sm:grid-cols-1 sm:items-start sm:gap-y-1 sm:p-4',
+                  p.featured ? 'border-accent bg-tint' : 'border-line bg-surface',
+                ]}
+              >
+                <span class:list={['text-sm font-semibold', p.featured ? 'text-accent-text' : 'text-muted']}>{p.name}</span>
+                <span class="col-start-2 row-span-2 row-start-1 text-xl font-semibold tracking-[-0.01em] sm:col-start-auto sm:row-span-1 sm:row-start-auto sm:text-2xl">{p.price}</span>
+                <span class="text-[13px] text-muted">{p.sub}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="text-[13px] text-muted">{t.pricesNote}</p>
+      </Card>
+    </div>
+  </div>
+</section>
+
+<!-- Detalhes e ajuda -->
+<section aria-labelledby="detalhes-titulo" class="page flex flex-col gap-6 py-16 sm:gap-7 sm:py-24">
+  <h2 id="detalhes-titulo" class="text-[28px] leading-[1.15] font-semibold tracking-[-0.01em]">{t.detTitle}</h2>
+  <dl class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-x-6 border-t border-line">
+    {
+      t.details.map(([k, v]) => (
+        <div class="flex flex-col gap-1.5 border-b border-line py-5">
+          <dt class="text-[13px] font-semibold tracking-[0.06em] text-muted uppercase">{k}</dt>
+          <dd class="text-[17px] leading-[1.4]">{v}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  <Card variant="hero" radius="panel" className="mt-4 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 px-6 py-6 sm:px-8 sm:py-7">
+    <div class="flex flex-col gap-1">
+      <p class="text-[22px] font-semibold">{t.helpTitle}</p>
+      <p class="text-base text-muted">{t.helpBody}</p>
+    </div>
+    <div class="flex flex-wrap gap-3 max-sm:w-full">
+      <Button href={href(lang, 'support')} size="md" className="justify-center max-sm:flex-1">{t.support}</Button>
+      <Button href={href(lang, 'privacy')} size="md" variant="light" className="justify-center max-sm:flex-1">{t.privacy}</Button>
+    </div>
+  </Card>
+</section>
