@@ -1,6 +1,6 @@
 import { faq } from '../data/faq';
 import type { Lang } from '../i18n/ui';
-import { APP_CATEGORY } from '../i18n/ui';
+import { APP_CATEGORY } from '../data/app';
 
 /** Mesmo @id da Organization do toski-labs-web (src/layouts/BaseLayout.astro). */
 export const ORG_ID = 'https://toski-labs.web.app/#toski-labs';

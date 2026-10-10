@@ -113,12 +113,6 @@ export const PETHEALTH_URL: Record<Lang, string> = { pt: 'https://toski-labs.com
 /** E-mail de suporte e contato (site, política, App Store e Google). */
 export const SUPPORT_EMAIL = 'toskilabs@gmail.com';
 
-/** ID do app na App Store (só os dígitos). Com um valor, liga <meta name="apple-itunes-app">. null = desligado. */
-export const APP_STORE_ID: string | null = null;
-
-/** Categoria do app nos dados estruturados (schema.org › applicationCategory). */
-export const APP_CATEGORY = 'LifestyleApplication';
-
 /** Chaves do localStorage (tudo fica só no navegador da pessoa; nada vai para servidor). */
 export const STORAGE = {
   theme: 'toski-theme', // 'light' | 'dark' (ausente = automático)
