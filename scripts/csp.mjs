@@ -1,7 +1,7 @@
 // Confere a Content-Security-Policy do HTML gerado (npm run check:csp, parte do npm run ci):
 //  1. nenhum atributo style="…" (nem on*="…" ou javascript:): hashes da CSP não cobrem atributos, e não liberamos 'unsafe-inline';
 //  2. cada <script> e <style> inline tem o hash na <meta http-equiv="content-security-policy">;
-//  3. nenhum script de outra origem, e nada além do script do tema e do menu de configurações.
+//  3. nenhum script de outra origem, e nada além do script do tema, do menu de configurações e do botão de copiar e-mail (Suporte).
 import { createHash } from 'node:crypto';
 import { loadPages, report } from './lib.mjs';
 
@@ -49,8 +49,9 @@ for (const page of await loadPages()) {
     if (/^(https?:)?\/\//.test(u)) errors.push(`${where}: recurso de outra origem: ${u}`);
   }
 
-  // 3. Quanto JS: o script do tema (inline) + o do menu de configurações; nada mais.
+  // 3. Quanto JS: o script do tema (inline) + o do menu de configurações; no Suporte, mais o botão de copiar e-mail.
   const executable = page.root.querySelectorAll('script').filter((s) => s.getAttribute('type') !== 'application/ld+json');
-  if (executable.length > 2) errors.push(`${where}: ${executable.length} scripts (esperado: tema + menu de configurações)`);
+  const allowed = page.slug === 'suporte' || page.slug === 'support' ? 3 : 2;
+  if (executable.length > allowed) errors.push(`${where}: ${executable.length} scripts (esperado até ${allowed}: tema, menu de configurações e, no Suporte, copiar e-mail)`);
 }
-report('csp: sem style= inline, hashes completos, só 2 scripts', errors);
+report('csp: sem style= inline, hashes completos, no máximo 3 scripts (tema, menu e copiar e-mail)', errors);

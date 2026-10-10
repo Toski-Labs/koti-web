@@ -1,3 +1,5 @@
+import { faq } from '../data/faq';
+import type { Lang } from '../i18n/ui';
 import { APP_CATEGORY } from '../i18n/ui';
 
 /** Mesmo @id da Organization do toski-labs-web (src/layouts/BaseLayout.astro). */
@@ -27,5 +29,15 @@ export function breadcrumb(site: URL, homeUrl: string, name: string, url: string
       { '@type': 'ListItem', position: 1, name: 'Koti', item: new URL(homeUrl, site).href },
       { '@type': 'ListItem', position: 2, name, item: url },
     ],
+  };
+}
+
+/** FAQPage do Suporte, com as mesmas perguntas da página. */
+export function faqPage(lang: Lang, url: string) {
+  return {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    inLanguage: lang === 'pt' ? 'pt-BR' : 'en',
+    mainEntity: faq[lang].map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
   };
 }

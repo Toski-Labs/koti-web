@@ -20,11 +20,19 @@ for (const p of await loadPages()) {
   const graph = data['@graph'] ?? [];
   const ids = new Set(graph.map((n) => n['@id']).filter(Boolean));
   const types = graph.map((n) => n['@type']);
-  const expected = ['Organization', 'WebSite', ...(p.slug.startsWith('app') ? ['MobileApplication'] : []), ...(p.slug.endsWith('suporte') || p.slug === 'support' ? ['FAQPage'] : [])];
+  const isSupport = p.slug === 'suporte' || p.slug === 'support';
+  const isPrivacy = p.slug === 'privacidade' || p.slug === 'privacy';
+  const expected = ['Organization', 'WebSite', ...(p.slug.startsWith('app') ? ['MobileApplication'] : []), ...(isSupport || isPrivacy ? ['BreadcrumbList'] : []), ...(isSupport ? ['FAQPage'] : [])];
   if (types.join() !== expected.join()) errors.push(`${p.url}: tipos ${types} (esperado ${expected})`);
   for (const n of graph) {
     const w = `${p.url} ${n['@type']}`;
     if (n['@type'] === 'Organization') { need(w, n, ['name', 'url', 'logo', 'email']); if (!isAbs(n.url) || !isAbs(n.logo)) errors.push(`${w}: url/logo precisam ser absolutos`); }
+    if (n['@type'] === 'Organization' && n['@id'] !== 'https://toski-labs.web.app/#toski-labs') errors.push(`${w}: @id diferente do toski-labs-web`);
+    if (n['@type'] === 'BreadcrumbList') {
+      const items = n.itemListElement ?? [];
+      if (items.length !== 2 || items.some((x, i) => x.position !== i + 1 || !x.name || !isAbs(x.item))) errors.push(`${w}: itens inválidos`);
+      if (items[1]?.item !== SITE + p.url) errors.push(`${w}: o último item deve ser a própria página`);
+    }
     if (n['@type'] === 'WebSite') { need(w, n, ['name', 'url', 'inLanguage', 'publisher']); if (!n.url?.startsWith(SITE)) errors.push(`${w}: url fora do site`); }
     if (n['@type'] === 'MobileApplication') {
       need(w, n, ['name', 'operatingSystem', 'applicationCategory', 'inLanguage', 'publisher', 'image']);
@@ -41,4 +49,4 @@ for (const p of await loadPages()) {
     if (n.publisher && !ids.has(n.publisher['@id']) && !isAbs(n.publisher['@id'])) errors.push(`${w}: publisher sem @id válido`);
   }
 }
-report('json-ld: Organization, WebSite, MobileApplication, FAQPage', errors);
+report('json-ld: Organization, WebSite, MobileApplication, BreadcrumbList, FAQPage', errors);

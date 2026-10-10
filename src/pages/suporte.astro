@@ -1,11 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Placeholder from '../components/pages/Placeholder.astro';
+import SupportPage from '../components/pages/SupportPage.astro';
 import { seo } from '../data/seo';
+import { routes } from '../i18n/ui';
+import { breadcrumb, faqPage } from '../lib/schema';
 
 const { title, description } = seo.pt.support;
+const url = new URL(routes.pt.support, Astro.site).href;
 ---
 
-<BaseLayout page="support" title={title} description={description}>
-  <Placeholder title="Koti" />
+<BaseLayout page="support" title={title} description={description} graph={[breadcrumb(Astro.site!, routes.pt.app, 'Suporte', url), faqPage('pt', url)]}>
+  <SupportPage />
 </BaseLayout>

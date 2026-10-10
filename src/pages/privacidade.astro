@@ -1,11 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Placeholder from '../components/pages/Placeholder.astro';
+import PrivacyPage from '../components/pages/PrivacyPage.astro';
 import { seo } from '../data/seo';
+import { routes } from '../i18n/ui';
+import { breadcrumb } from '../lib/schema';
 
 const { title, description } = seo.pt.privacy;
+const url = new URL(routes.pt.privacy, Astro.site).href;
 ---
 
-<BaseLayout page="privacy" title={title} description={description}>
-  <Placeholder title="Koti" />
+<BaseLayout page="privacy" title={title} description={description} graph={[breadcrumb(Astro.site!, routes.pt.app, 'Política de Privacidade', url)]}>
+  <PrivacyPage />
 </BaseLayout>
