@@ -1,6 +1,6 @@
 ---
 /** Suporte (PT e EN): contato, código de suporte e perguntas frequentes. */
-import { Card, IconBox, Kicker, SectionHeading, buttonClasses } from '@toski-labs/ds';
+import { Card, Icon, IconBox, Kicker, SectionHeading, buttonClasses } from '@toski-labs/ds';
 import { faq } from '../../data/faq';
 import { getLang, href, SUPPORT_EMAIL } from '../../i18n/ui';
 import FaqItem from '../ui/FaqItem.astro';
@@ -16,6 +16,10 @@ const t = {
     mailBody: 'Mande um e-mail para',
     mailBodyEnd: 'Respondemos em até 2 dias úteis.',
     mailCta: 'Escrever e-mail',
+    mailWeb: 'No navegador',
+    mailApp: 'App de e-mail',
+    mailAppHint: 'Neste aparelho',
+    newTab: 'abre em nova aba',
     mailSubject: 'Suporte Koti',
     copyMail: 'Copiar e-mail',
     copiedMail: 'E-mail copiado',
@@ -37,6 +41,10 @@ const t = {
     mailBody: 'Email',
     mailBodyEnd: 'We reply within 2 business days.',
     mailCta: 'Send an email',
+    mailWeb: 'In the browser',
+    mailApp: 'Email app',
+    mailAppHint: 'On this device',
+    newTab: 'opens in a new tab',
     mailSubject: 'Koti support',
     copyMail: 'Copy email',
     copiedMail: 'Email copied',
@@ -50,7 +58,16 @@ const t = {
     privCta: 'Read the Privacy Policy',
   },
 }[lang];
-const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubject)}`;
+const subject = encodeURIComponent(t.mailSubject);
+const mailto = `mailto:${SUPPORT_EMAIL}?subject=${subject}`;
+// O mailto sozinho não faz nada para quem não tem app de e-mail configurado: o botão abre um menu com Gmail e Outlook no navegador.
+const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${SUPPORT_EMAIL}&su=${subject}`;
+const outlook = `https://outlook.live.com/mail/0/deeplink/compose?to=${SUPPORT_EMAIL}&subject=${subject}`;
+const mailOptions = [
+  { label: 'Gmail', hint: t.mailWeb, href: gmail, external: true },
+  { label: 'Outlook', hint: t.mailWeb, href: outlook, external: true },
+  { label: t.mailApp, hint: t.mailAppHint, href: mailto, external: false },
+];
 ---
 
 <section aria-labelledby="suporte-titulo" class="page pt-10 pb-10">
@@ -64,7 +81,26 @@ const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubje
     <!-- O endereço fica visível e selecionável: sem JavaScript, o botão de copiar some e dá para copiar daqui. -->
     <p class="text-base leading-normal text-muted">{t.mailBody} <strong class="font-semibold text-ink select-all">{SUPPORT_EMAIL}</strong>. {t.mailBodyEnd}</p>
     <div class="mt-1.5 flex flex-wrap gap-2.5">
-      <a href={mailto} class={buttonClasses('primary', 'md', 'no-underline max-sm:flex-auto max-sm:justify-center')}>{t.mailCta}</a>
+      <details class="toski-mail group relative max-sm:flex-auto">
+        <summary class={buttonClasses('primary', 'md', 'w-full cursor-pointer list-none [&::-webkit-details-marker]:hidden')}>
+          {t.mailCta}<Icon name="chevron-down" size={18} stroke={2.2} className="transition-transform group-open:rotate-180 motion-reduce:transition-none" />
+        </summary>
+        <ul role="list" class="absolute top-full left-0 z-20 mt-2 flex w-max min-w-full flex-col gap-0.5 rounded-card border border-line bg-surface p-1.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)]">
+          {mailOptions.map((o) => (
+            <li>
+              <a
+                href={o.href}
+                target={o.external ? '_blank' : undefined}
+                rel={o.external ? 'noopener noreferrer' : undefined}
+                class="flex min-h-11 flex-col justify-center rounded-[10px] px-3 py-1.5 leading-tight text-ink no-underline hover:bg-tint hover:text-ink"
+              >
+                <span class="text-[15px] font-semibold">{o.label}{o.external && <span class="sr-only">, {t.newTab}</span>}</span>
+                <span class="text-xs text-muted">{o.hint}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
       <button
         type="button"
         hidden
@@ -76,7 +112,7 @@ const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubje
         {t.copyMail}
       </button>
     </div>
-    <p role="status" class="sr-only" data-copy-status></p>
+    <p class="sr-only" aria-live="polite" data-copy-status></p>
   </Card>
   <Card variant="hero" radius="panel" className="flex min-w-0 flex-[1_1_340px] flex-col gap-3.5 p-8">
     <IconBox name="copy" on="surface" />
@@ -108,7 +144,7 @@ const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubje
   <a href={href(lang, 'privacy')} class="inline-flex min-h-11 items-center text-base font-semibold no-underline hover:underline">{t.privCta}</a>
 </section>
 
-<!-- Botão de copiar e-mail: melhoria progressiva (fica escondido sem JavaScript). -->
+<!-- Copiar e-mail e fechar o menu do e-mail: melhoria progressiva. Sem JavaScript o menu fica aberto até outro clique no resumo e o botão de copiar some. -->
 <script>
   const button = document.querySelector<HTMLButtonElement>('[data-copy]');
   const status = document.querySelector<HTMLElement>('[data-copy-status]');
@@ -128,6 +164,23 @@ const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubje
         button.textContent = button.dataset.copyLabel ?? '';
         if (status) status.textContent = '';
       }, 2000);
+    });
+  }
+
+  const menu = document.querySelector<HTMLDetailsElement>('.toski-mail');
+  if (menu) {
+    const close = () => {
+      menu.open = false;
+    };
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target as Node)) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.open) {
+        close();
+        menu.querySelector('summary')?.focus();
+      }
     });
   }
 </script>
