@@ -30,7 +30,7 @@ Modelos seguidos: `toski-labs-web` (estrutura, i18n, layout, acessibilidade) e `
 | h2 Planos | Grátis para casal; Plus para a casa toda · Free for couples; Plus for the whole home |
 | Cabeçalho | O botão PT/EN do canvas virou o menu de configurações (tema + idioma), na mesma posição |
 | Suporte | "Escrever e-mail" abre um menu (Gmail, Outlook, app de e-mail); o canvas mostra um botão simples |
-| 404 | Bilíngue (PT em cima, EN embaixo, botões "Ir para o início" e "Go to home"); o canvas tem um quadro por idioma. O botão "Suporte" do canvas ficou de fora |
+| 404 | Bilíngue (PT em cima, EN embaixo, com os botões "Ir para o início", "Suporte" e "Go to home"); o canvas tem um quadro por idioma |
 
 ## Fase 0 — Fundação ✅ (10 out 2026)
 Astro + TS strict + Tailwind 4 + DS com o tema Koti, Outfit local, i18n em `src/i18n/ui.ts`, `BaseLayout` com SEO (canonical, hreflang pt-BR/en/x-default, Open Graph e Twitter completos, `theme-color` claro/escuro, JSON-LD em `@graph`), Header, Footer, CSP em `<meta>` calculada pelo Astro, scripts de checagem copiados do pethealth-web.
