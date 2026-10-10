@@ -1,0 +1,9 @@
+---
+/** "koti" em minúsculas, na cor de destaque (Ameixa no claro, lilás no escuro). */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<span class:list={['font-semibold tracking-[-0.01em] text-accent-text', className]}>koti</span>

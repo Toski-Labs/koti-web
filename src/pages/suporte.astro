@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Placeholder from '../components/pages/Placeholder.astro';
+import { seo } from '../data/seo';
+
+const { title, description } = seo.pt.support;
+---
+
+<BaseLayout page="support" title={title} description={description}>
+  <Placeholder title="Koti" />
+</BaseLayout>

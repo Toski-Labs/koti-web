@@ -1,0 +1,9 @@
+---
+/** "toski labs" do rodapé: "labs" em caramelo (o rodapé é escuro nos dois temas). */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<span class:list={['font-semibold tracking-[-0.01em]', className]}>toski <span class="font-normal text-caramelo">labs</span></span>
