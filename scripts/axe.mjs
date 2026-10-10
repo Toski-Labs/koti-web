@@ -19,8 +19,12 @@ for (const theme of ['light', 'dark']) {
       await page.goto(base + p.url, { waitUntil: 'networkidle' });
       if ((await page.evaluate(() => document.documentElement.dataset.theme)) !== theme) errors.push(`${p.url}: tema ${theme} não aplicado`);
       const states = [['', null], ['menu aberto', '.toski-settings-trigger']];
+      if (await page.$('.toski-mail summary')) states.push(['menu do e-mail aberto', '.toski-mail summary']);
       for (const [label, open] of states) {
-        if (open) await page.click(open);
+        if (open) {
+          await page.keyboard.press('Escape'); // fecha o menu anterior
+          await page.click(open);
+        }
         const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice']).analyze();
         runs++;
         for (const v of violations) errors.push(`${p.url} ${width}px ${theme} ${label}: ${v.id} (${v.nodes.length}) ${v.nodes[0].target.join(' ')}`);
@@ -31,4 +35,4 @@ for (const theme of ['light', 'dark']) {
 }
 await browser.close();
 server.close();
-report(`axe: ${runs} varreduras (7 páginas × claro/escuro × 390/1280, com o menu aberto)`, errors);
+report(`axe: ${runs} varreduras (7 páginas × claro/escuro × 390/1280, com os menus abertos)`, errors);

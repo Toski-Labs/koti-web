@@ -8,7 +8,7 @@ interface Props {
 const { question } = Astro.props;
 ---
 
-<details class="group rounded-card bg-surface">
+<details data-faq class="group rounded-card bg-surface">
   <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 px-5.5 py-4 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
     {question}
     <Icon name="chevron-down" size={20} stroke={2} className="text-muted transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none" />
