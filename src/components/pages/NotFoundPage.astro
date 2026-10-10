@@ -1,0 +1,44 @@
+---
+/** Página não encontrada (o Firebase serve /404.html). Bilíngue, porque não sabemos o idioma de quem chegou. */
+import { buttonClasses } from '@toski-labs/ds';
+
+const items = [
+  { name: 'Leite integral', sub: '12 un', missing: false },
+  { name: 'Pão de forma', sub: '+ por João', missing: false },
+  { name: 'Esta página', sub: 'Não tinha · volta na próxima', missing: true },
+];
+---
+
+<section aria-labelledby="nf-titulo" class="page flex flex-wrap-reverse items-center justify-center gap-x-18 gap-y-12 pt-12 pb-28">
+  <div class="flex max-w-130 min-w-0 flex-[1_1_360px] flex-col gap-4.5">
+    <p class="text-[13px] font-semibold tracking-[0.06em] text-accent-text uppercase">Erro 404 · Error 404</p>
+    <h1 id="nf-titulo" class="text-[clamp(36px,4.6vw,56px)] leading-[1.06] font-semibold tracking-[-0.02em]">Essa página não tinha</h1>
+    <p class="text-lg leading-[1.55] text-muted">O endereço pode ter mudado ou o link veio com um pedaço faltando. Se você recebeu um convite, abra o link de novo direto da mensagem.</p>
+    <!-- Inglês: a 404 é a mesma para os dois idiomas. -->
+    <div lang="en" class="flex flex-col gap-1.5 border-t border-line pt-4.5">
+      <p class="text-xl font-semibold">This page was out of stock</p>
+      <p class="text-base leading-normal text-muted">The address may have changed or the link came with a piece missing. If you got an invite, open the link again straight from the message.</p>
+    </div>
+    <div class="mt-1.5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+      <a href="/" class={buttonClasses('primary', 'lg', 'justify-center no-underline max-sm:h-12 max-sm:text-base')}>Ir para o início</a>
+      <a href="/en" hreflang="en" lang="en" class={buttonClasses('secondary', 'lg', 'justify-center no-underline max-sm:h-12 max-sm:text-base')}>Go to home</a>
+    </div>
+  </div>
+  <div aria-hidden="true" class="relative flex w-full max-w-95 min-w-0 flex-[0_1_380px] justify-center py-6">
+    <div class="absolute top-1/2 left-1/2 aspect-square w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-hero"></div>
+    <div class="relative flex w-70 -rotate-3 flex-col gap-1 rounded-3xl bg-surface p-4.5 shadow-[0_18px_44px_rgba(35,27,23,0.14)]">
+      <span class="pb-2 text-lg font-semibold">Compra do mês</span>
+      {items.map((item) => (
+        <div class="flex items-center gap-3 border-t border-line py-2.5">
+          <span class:list={['flex size-6 shrink-0 items-center justify-center rounded-full', item.missing ? 'border-2 border-critical bg-critical-bg text-critical' : 'bg-accent text-on-accent']}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d={item.missing ? 'M6 6l12 12M18 6L6 18' : 'M5 12.5l4.5 4.5L19 7.5'}></path></svg>
+          </span>
+          <span class="flex flex-col gap-px">
+            <span class:list={['text-[15px] font-medium', item.missing ? 'text-ink' : 'text-muted line-through']}>{item.name}</span>
+            <span class:list={['text-xs', item.missing ? 'text-critical' : 'text-muted']}>{item.sub}</span>
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

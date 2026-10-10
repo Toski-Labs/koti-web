@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Placeholder from '../components/pages/Placeholder.astro';
+import NotFoundPage from '../components/pages/NotFoundPage.astro';
 import { notFound } from '../data/seo';
 ---
 
 <BaseLayout page="app" title={notFound.title} description={notFound.description} noindex>
-  <Placeholder title="404" />
+  <NotFoundPage />
 </BaseLayout>
