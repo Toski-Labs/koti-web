@@ -2,7 +2,7 @@
 
 Fonte da verdade visual: canvas "Koti · Design", página "Site · koti.toski-labs.com.br" (quadros Home claro/celular/escuro/EN, 404, Suporte e Privacidade PT/EN).
 Stack: Astro 7 + TypeScript (strict) + Tailwind 4 (`@tailwindcss/vite`) + `@toski-labs/ds` 0.5.3 com o tema Koti (Ameixa).
-Hospedagem prevista: Firebase Hosting, no projeto Firebase do Koti (o mesmo do app e do PWA, por causa do login), em `koti.toski-labs.com.br`.
+Hospedagem prevista: Firebase Hosting, em `koti.toski-labs.com.br`.
 Regra: tudo gratuito. Site estático, sem cookies, sem Google Analytics. JavaScript no navegador só para: tema e idioma (menu de configurações) e, no Suporte, o menu do e-mail e o botão de copiar.
 Modelos seguidos: `toski-labs-web` (estrutura, i18n, layout, acessibilidade) e `pethealth-web` (CSP, checagens automáticas, imagens OG geradas por script, JSON-LD).
 
@@ -10,7 +10,7 @@ Modelos seguidos: `toski-labs-web` (estrutura, i18n, layout, acessibilidade) e `
 - E-mail de suporte e contato: **toskilabs@gmail.com**. Resposta em até 2 dias úteis.
 - Idiomas: português em `/`, inglês em `/en`. Sem redirecionamento automático; o menu PT/EN troca para a página equivalente.
 - **Rotas (não mudar depois de publicadas: vão para a App Store e o Google):** `/`, `/suporte`, `/privacidade` · `/en`, `/en/support`, `/en/privacy` · `404` (bilíngue, `noindex`).
-- **Reservado para o PWA (entra depois neste mesmo repositório): `/convite/*` e `/app/*`.** Não há páginas nesses caminhos. Quando o PWA entrar: (1) a CSP em `astro.config.mjs` (`default-src 'none'`, sem `connect-src` externo) precisará de uma versão própria para esses caminhos, por causa do Firebase Auth e do Firestore; (2) a 404 e o `firebase.json` precisarão de `rewrites` só para eles; (3) manter o sitemap sem eles.
+- PWA: projeto separado, no projeto Firebase do Koti.
 - Tema: automático pelo sistema, com menu de configurações (Automático/Claro/Escuro, salvo em `localStorage` `toski-theme`, aplicado por script inline antes da pintura). A chave é a mesma do toski-labs-web.
 - Fonte: Outfit hospedada no site (`@fontsource-variable/outfit`), sem Google Fonts.
 - Imagens: ícone do Koti vindo do DS (`products/koti`), inline no HTML. Favicon, apple-touch-icon e ícones 192/512 são gerados por `scripts/generate-assets.mjs` (ficam no `.gitignore`).
@@ -89,4 +89,3 @@ Home (hero com celular, 6 recursos, destaque do mercado, "Sem iPhone", planos, d
 9. Atualizar o canvas com os textos da tabela "Textos alterados em relação ao canvas".
 10. Pedir ao DS os tokens do bloco `TODO(ds)` e apagá-lo.
 11. Revisão jurídica da Política e confirmar a rede de anúncios (o texto diz que o Koti não mostra anúncios).
-12. PWA (`/convite/*` e `/app/*`): ver "Reservado para o PWA" nas Decisões.

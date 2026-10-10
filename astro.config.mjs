@@ -31,7 +31,6 @@ export default defineConfig({
   // Content-Security-Policy em <meta>: o Astro calcula os hashes dos scripts e estilos inline.
   // frame-ancestors não vale em <meta>; fica no firebase.json. Atributos style="" não são cobertos
   // por hash: scripts/csp.mjs falha o build se algum HTML gerado tiver um.
-  // /convite/* e /app/* (PWA, depois) vão precisar de uma CSP própria: ver docs/PLANO.md.
   security: {
     csp: {
       // O script do tema é inline (is:inline) e o Astro não calcula o hash dele: entra aqui.

@@ -7,7 +7,6 @@ export type PageKey = 'app' | 'privacy' | 'support';
 
 /**
  * Endereços públicos. Vão para o App Store Connect e o Google: não mudar depois de publicados.
- * Reservados para o PWA (entra depois neste repositório): /convite/* e /app/*. Não criar páginas neles aqui.
  */
 export const routes: Record<Lang, Record<PageKey, string>> = {
   pt: { app: '/', privacy: '/privacidade', support: '/suporte' },
