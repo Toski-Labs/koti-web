@@ -2,7 +2,7 @@
 
 Fonte da verdade visual: canvas "Koti · Design", página "Site · koti.toski-labs.com.br" (quadros Home claro/celular/escuro/EN, 404, Suporte e Privacidade PT/EN).
 Stack: Astro 7 + TypeScript (strict) + Tailwind 4 (`@tailwindcss/vite`) + `@toski-labs/ds` 0.5.3 com o tema Koti (Ameixa).
-Hospedagem prevista: Firebase Hosting, em `koti.toski-labs.com.br`.
+Hospedagem: Firebase Hosting, projeto `toski-labs` (Plano Spark), site `koti-toskilabs` (`https://koti-toskilabs.web.app`, criado em 10 out 2026), com o endereço final `koti.toski-labs.com.br`.
 Regra: tudo gratuito. Site estático, sem cookies, sem Google Analytics. JavaScript no navegador só para: tema e idioma (menu de configurações) e, no Suporte, o menu do e-mail e o botão de copiar.
 Modelos seguidos: `toski-labs-web` (estrutura, i18n, layout, acessibilidade) e `pethealth-web` (CSP, checagens automáticas, imagens OG geradas por script, JSON-LD).
 
@@ -46,10 +46,11 @@ Home (hero com celular, 6 recursos, destaque do mercado, "Sem iPhone", planos, d
 - Smart App Banner pronto em `src/data/app.ts` (`APP_STORE_ID`); liga sozinho quando houver ID.
 - Acessibilidade: axe-core sem nenhuma violação (64 varreduras: 7 páginas × claro/escuro × 390/1280 px, com o menu de configurações e o menu do e-mail abertos). Contraste mínimo 4,5:1 conferido pelo axe, inclusive o Ameixa sobre o tint.
 
-## Fase 3 — Publicação no Firebase ⛔ [!] travada
-- **Não existe projeto Firebase do Koti.** `firebase projects:list` (10 out 2026) mostra só PetHealthTracker, PetHealthTracker Staging e toski-labs.
-- Já pronto: `firebase.json` (cleanUrls, sem barra no fim, cache longo em `/_astro/**`, CSP `frame-ancestors`, `nosniff`, `Referrer-Policy`) e o script `npm run deploy`. Falta o campo `"site"` do `firebase.json` e o `.firebaserc`.
-- Quando o projeto existir: `firebase use --add`, `"site": "<id>"` em `firebase.json`, `npm run deploy`, depois **Hosting › Adicionar domínio personalizado** `koti.toski-labs.com.br` (o registro DNS fica com a Stefany).
+## Fase 3 — Publicação no Firebase (site criado; deploy só quando a Stefany pedir)
+- O site do Koti é um **segundo site de Hosting no projeto `toski-labs`**, não um projeto do Koti: `firebase hosting:sites:create koti-toskilabs --project toski-labs`.
+- Configurado: `.firebaserc` (target `koti` → `koti-toskilabs`), `firebase.json` (`"target": "koti"`, cleanUrls, sem barra no fim, cache longo em `/_astro/**`, CSP `frame-ancestors`, `nosniff`, `Referrer-Policy`) e `npm run deploy` (`npm run build && firebase deploy --only hosting:koti`).
+- **Ainda não houve deploy.** Para publicar: `npm run deploy`.
+- Domínio próprio, a cargo da Stefany: Hosting › Adicionar domínio personalizado `koti.toski-labs.com.br` no site `koti-toskilabs` e o registro DNS.
 
 ## Situação em 10 out 2026
 
@@ -67,8 +68,8 @@ Home (hero com celular, 6 recursos, destaque do mercado, "Sem iPhone", planos, d
 - Rich Results Test e validador de schema.org: precisam de uma URL pública ou colar o HTML; só a checagem estrutural offline (`npm run check:jsonld`) foi feita. Rodar nos dois depois do deploy.
 
 ## Falta
-**Bloqueado**
-1. Criar o projeto Firebase do Koti e concluir a Fase 3 (acima).
+**Publicação (Stefany)**
+1. Pedir o primeiro deploy (`npm run deploy`), adicionar o domínio `koti.toski-labs.com.br` no Hosting e criar o registro DNS.
 
 **Depois do deploy**
 2. **Search Console:** criar uma propriedade do tipo **Domínio** (verificação por **DNS**, registro TXT do `koti.toski-labs.com.br` ou do domínio pai). Não usar a tag HTML.

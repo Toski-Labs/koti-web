@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "toski-labs"
+  },
+  "targets": {
+    "toski-labs": {
+      "hosting": {
+        "koti": ["koti-toskilabs"]
+      }
+    }
+  }
+}

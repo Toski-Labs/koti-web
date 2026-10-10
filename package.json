@@ -22,7 +22,7 @@
     "check:axe": "node scripts/axe.mjs",
     "check:lighthouse": "node scripts/lighthouse.mjs",
     "ci": "npm run check && npm run build && npm run check:csp && npm run check:seo && npm run check:links && npm run check:jsonld && npm run check:axe && npm run check:lighthouse",
-    "deploy": "npm run build && firebase deploy --only hosting"
+    "deploy": "npm run build && firebase deploy --only hosting:koti"
   },
   "dependencies": {
     "@astrojs/react": "^7.0.1",
