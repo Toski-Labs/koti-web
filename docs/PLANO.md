@@ -74,7 +74,7 @@ Home (hero com celular, 6 recursos, destaque do mercado, "Sem iPhone", planos, d
 1. Republicar (`npm run deploy`) para o novo rodapé ir ao ar.
 
 **Com o domínio no ar**
-2. **Search Console:** criar uma propriedade do tipo **Domínio** (verificação por **DNS**, registro TXT do `koti.toski-labs.com.br` ou do domínio pai). Não usar a tag HTML.
+2. **Search Console:** propriedade de prefixo de URL `https://koti.toski-labs.com.br/`, verificada pelo **arquivo HTML** `public/google1c343bc8814b41ea.html` (decisão da Stefany em 10 out 2026, no lugar do Domínio por DNS). **Não apagar o arquivo**, senão a verificação cai. Se o Google recusar por causa do redirect do `cleanUrls` (`.html` → sem extensão), usar a propriedade Domínio com TXT no DNS.
 3. Enviar o sitemap: `https://koti.toski-labs.com.br/sitemap-index.xml`.
 4. Pedir indexação de cada página (Inspeção de URL › Solicitar indexação, cerca de 5 por dia):
    - [ ] https://koti.toski-labs.com.br/
