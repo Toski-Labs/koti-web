@@ -1,6 +1,7 @@
 name: CI
 
-# Roda o mesmo comando que você roda na máquina (npm run ci). Sem deploy: o deploy é manual.
+# Mesmas checagens do npm run ci, menos o Lighthouse (nota 100 exata oscila em runner compartilhado): ele roda
+# na máquina, com npm run ci ou npm run check:lighthouse, antes do deploy. Sem deploy aqui: o deploy é manual.
 on:
   pull_request:
 
@@ -22,6 +23,12 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # Chromium do Playwright: usado pelo axe e pelo Lighthouse CI (scripts/lighthouse.mjs aponta para ele).
+      # Chromium do Playwright: usado pelo axe.
       - run: npx playwright install --with-deps chromium
-      - run: npm run ci
+      - run: npm run check
+      - run: npm run build
+      - run: npm run check:csp
+      - run: npm run check:seo
+      - run: npm run check:links
+      - run: npm run check:jsonld
+      - run: npm run check:axe

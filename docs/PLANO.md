@@ -44,13 +44,14 @@ Home (hero com celular, 6 recursos, destaque do mercado, "Sem iPhone", planos, d
 - `@astrojs/sitemap` com pares PT↔EN e `x-default`, sem a 404; `robots.txt` aponta para `/sitemap-index.xml`.
 - Imagens de compartilhamento 1200×630 (Home PT e EN) geradas por script, com o ícone e "Nossa casa, juntos." / "Our home, together."
 - Smart App Banner pronto em `src/data/app.ts` (`APP_STORE_ID`); liga sozinho quando houver ID.
+- CI do GitHub (`.github/workflows/ci.yml`): tudo do `npm run ci` menos o Lighthouse, que fica só na máquina (nota 100 exata oscila em runner compartilhado, e o Chrome dos perfis escuros precisa de ajuste de sandbox lá). Rodar `npm run ci` completo antes de cada deploy.
 - Acessibilidade: axe-core sem nenhuma violação (64 varreduras: 7 páginas × claro/escuro × 390/1280 px, com o menu de configurações e o menu do e-mail abertos). Contraste mínimo 4,5:1 conferido pelo axe, inclusive o Ameixa sobre o tint.
 
-## Fase 3 — Publicação no Firebase (site criado; deploy só quando a Stefany pedir)
+## Fase 3 — Publicação no Firebase ✅ (10 out 2026)
 - O site do Koti é um **segundo site de Hosting no projeto `toski-labs`**, não um projeto do Koti: `firebase hosting:sites:create koti-toskilabs --project toski-labs`.
 - Configurado: `.firebaserc` (target `koti` → `koti-toskilabs`), `firebase.json` (`"target": "koti"`, cleanUrls, sem barra no fim, cache longo em `/_astro/**`, CSP `frame-ancestors`, `nosniff`, `Referrer-Policy`) e `npm run deploy` (`npm run build && firebase deploy --only hosting:koti`).
-- **Ainda não houve deploy.** Para publicar: `npm run deploy`.
-- Domínio próprio, a cargo da Stefany: Hosting › Adicionar domínio personalizado `koti.toski-labs.com.br` no site `koti-toskilabs` e o registro DNS.
+- **Deploy feito em 10 out 2026** (feito pela Stefany). Para republicar: `npm run deploy`.
+- **Domínio `koti.toski-labs.com.br` conectado** ao site `koti-toskilabs` (registrado em 10 out 2026, a pedido da Stefany).
 
 ## Situação em 10 out 2026
 
@@ -61,7 +62,8 @@ Home (hero com celular, 6 recursos, destaque do mercado, "Sem iPhone", planos, d
 - Menu de tema e idioma verificado em navegador: o tema persiste ao recarregar, Esc fecha, os links PT↔EN apontam para a página equivalente.
 - Menu do e-mail verificado em navegador (PT e EN): Gmail e Outlook abrem em nova aba, fecha ao escolher, ao clicar fora e com Esc; "Copiar e-mail" muda para "E-mail copiado"/"Email copied", avisa no `aria-live` e volta em 2 s; sem a API de área de transferência o botão some e o e-mail continua visível.
 - Capturas 390 e 1280 px, claro e escuro, comparadas com as medidas do canvas (comparação feita contra o código do canvas, não lado a lado em imagem).
-- `main` do remoto vazia: nada para fazer rebase (conferido em 10 out 2026).
+- **Rodapé refeito com a estrutura do pethealth-web**: marca do Koti (ícone do DS + "Ko" em `footer-ink` e "ti" em Ameixa clara, `footer-accent`) com a frase "Listas, tarefas e contas da casa, juntos num lugar só."; coluna "Um app da Toski Labs" com `toski-labs.com.br`; coluna Ajuda (Suporte e Privacidade); linha de baixo com o ícone da Toski Labs e "© ano toski labs". Saíram a coluna Projetos, o link do PetHealthTracker e o "Recife, Brasil". Mantidos o botão "Voltar ao topo" no celular, o `aria-labelledby` nos `<nav>` e os alvos de toque de 44 px.
+- `main` do remoto sem commits novos antes do CI do rodapé: nada para fazer rebase (conferido em 10 out 2026).
 
 ### Não testado
 - Não houve teste com leitor de tela de verdade (VoiceOver). Roteiro em `../toski-labs-web/docs/ACESSIBILIDADE.md`.
@@ -69,9 +71,9 @@ Home (hero com celular, 6 recursos, destaque do mercado, "Sem iPhone", planos, d
 
 ## Falta
 **Publicação (Stefany)**
-1. Pedir o primeiro deploy (`npm run deploy`), adicionar o domínio `koti.toski-labs.com.br` no Hosting e criar o registro DNS.
+1. Republicar (`npm run deploy`) para o novo rodapé ir ao ar.
 
-**Depois do deploy**
+**Com o domínio no ar**
 2. **Search Console:** criar uma propriedade do tipo **Domínio** (verificação por **DNS**, registro TXT do `koti.toski-labs.com.br` ou do domínio pai). Não usar a tag HTML.
 3. Enviar o sitemap: `https://koti.toski-labs.com.br/sitemap-index.xml`.
 4. Pedir indexação de cada página (Inspeção de URL › Solicitar indexação, cerca de 5 por dia):

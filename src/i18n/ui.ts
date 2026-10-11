@@ -41,10 +41,9 @@ export const ui = {
     'settings.hint.dark': 'Sempre escuro, mesmo de dia.',
     'settings.language': 'Idioma',
     'settings.saved': 'Suas escolhas ficam salvas neste navegador.',
-    'footer.lab': 'Laboratório de tecnologia para o ecossistema Apple.',
-    'footer.projects': 'Projetos',
+    'footer.lab': 'Um app da Toski Labs',
+    'footer.tagline': 'Listas, tarefas e contas da casa, juntos num lugar só.',
     'footer.help': 'Ajuda',
-    'footer.place': 'Recife, Brasil',
     'toTop': 'Voltar ao topo',
     'skip': 'Pular para o conteúdo',
   },
@@ -68,10 +67,9 @@ export const ui = {
     'settings.hint.dark': 'Always dark, even during the day.',
     'settings.language': 'Language',
     'settings.saved': 'Your choices are saved in this browser.',
-    'footer.lab': 'A technology lab for the Apple ecosystem.',
-    'footer.projects': 'Projects',
+    'footer.lab': 'A Toski Labs app',
+    'footer.tagline': 'Lists, chores and household bills, together in one place.',
     'footer.help': 'Help',
-    'footer.place': 'Recife, Brazil',
     'toTop': 'Back to top',
     'skip': 'Skip to content',
   },
@@ -105,9 +103,6 @@ export function href(lang: Lang, page: PageKey, hash?: string): string {
 
 /** Site da Toski Labs (rodapé). */
 export const LAB_URL: Record<Lang, string> = { pt: 'https://toski-labs.com.br', en: 'https://toski-labs.com.br/en' };
-
-/** Página do PetHealthTracker no site da Toski Labs (rodapé). */
-export const PETHEALTH_URL: Record<Lang, string> = { pt: 'https://toski-labs.com.br/pethealthtracker', en: 'https://toski-labs.com.br/en/pethealthtracker' };
 
 /** E-mail de suporte e contato (site, política, App Store e Google). */
 export const SUPPORT_EMAIL = 'toskilabs@gmail.com';
