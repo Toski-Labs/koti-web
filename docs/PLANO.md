@@ -44,6 +44,7 @@ Home (hero com celular, 6 recursos, destaque do mercado, "Sem iPhone", planos, d
 - `@astrojs/sitemap` com pares PT↔EN e `x-default`, sem a 404; `robots.txt` aponta para `/sitemap-index.xml`.
 - Imagens de compartilhamento 1200×630 (Home PT e EN) geradas por script, com o ícone e "Nossa casa, juntos." / "Our home, together."
 - Smart App Banner pronto em `src/data/app.ts` (`APP_STORE_ID`); liga sozinho quando houver ID.
+- CI do GitHub (`.github/workflows/ci.yml`): tudo do `npm run ci` menos o Lighthouse, que fica só na máquina (nota 100 exata oscila em runner compartilhado, e o Chrome dos perfis escuros precisa de ajuste de sandbox lá). Rodar `npm run ci` completo antes de cada deploy.
 - Acessibilidade: axe-core sem nenhuma violação (64 varreduras: 7 páginas × claro/escuro × 390/1280 px, com o menu de configurações e o menu do e-mail abertos). Contraste mínimo 4,5:1 conferido pelo axe, inclusive o Ameixa sobre o tint.
 
 ## Fase 3 — Publicação no Firebase ✅ (10 out 2026)
