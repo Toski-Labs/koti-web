@@ -27,7 +27,7 @@ for (const p of await loadPages()) {
   for (const n of graph) {
     const w = `${p.url} ${n['@type']}`;
     if (n['@type'] === 'Organization') { need(w, n, ['name', 'url', 'logo', 'email']); if (!isAbs(n.url) || !isAbs(n.logo)) errors.push(`${w}: url/logo precisam ser absolutos`); }
-    if (n['@type'] === 'Organization' && n['@id'] !== 'https://toski-labs.web.app/#toski-labs') errors.push(`${w}: @id diferente do toski-labs-web`);
+    if (n['@type'] === 'Organization' && n['@id'] !== 'https://toski-labs.com.br/#organization') errors.push(`${w}: @id diferente do toski-labs-web e do pethealth-web`);
     if (n['@type'] === 'BreadcrumbList') {
       const items = n.itemListElement ?? [];
       if (items.length !== 2 || items.some((x, i) => x.position !== i + 1 || !x.name || !isAbs(x.item))) errors.push(`${w}: itens inválidos`);
