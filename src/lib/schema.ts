@@ -2,8 +2,8 @@ import { faq } from '../data/faq';
 import type { Lang } from '../i18n/ui';
 import { APP_CATEGORY } from '../data/app';
 
-/** Mesmo @id da Organization do toski-labs-web (src/layouts/BaseLayout.astro). */
-export const ORG_ID = 'https://toski-labs.web.app/#toski-labs';
+/** Mesmo @id da Organization do toski-labs-web e do pethealth-web. */
+export const ORG_ID = 'https://toski-labs.com.br/#organization';
 
 /** App na página inicial. Sem offers, aggregateRating nem review até o app estar na App Store e ter preço. */
 export function mobileApplication(site: URL, url: string, description: string) {
