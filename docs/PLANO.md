@@ -4,7 +4,7 @@ Fonte da verdade visual: canvas "Koti · Design", página "Site · koti.toski-la
 Stack: Astro 7 + TypeScript (strict) + Tailwind 4 (`@tailwindcss/vite`) + `@toski-labs/ds` 0.5.3 com o tema Koti (Ameixa).
 Hospedagem: Firebase Hosting, projeto `toski-labs` (Plano Spark), site `koti-toskilabs` (`https://koti-toskilabs.web.app`, criado em 10 out 2026), com o endereço final `koti.toski-labs.com.br`.
 Regra: tudo gratuito. Site estático, sem cookies, sem Google Analytics. JavaScript no navegador só para: tema e idioma (menu de configurações) e, no Suporte, o menu do e-mail e o botão de copiar.
-Modelos seguidos: `toski-labs-web` (estrutura, i18n, layout, acessibilidade) e `pethealth-web` (CSP, checagens automáticas, imagens OG geradas por script, JSON-LD).
+Modelos seguidos: `toski-labs-web` (estrutura, i18n, layout, acessibilidade) e `pawta-web` (CSP, checagens automáticas, imagens OG geradas por script, JSON-LD).
 
 ## Decisões
 - E-mail de suporte e contato: **toskilabs@gmail.com**. Resposta em até 2 dias úteis.
@@ -18,7 +18,7 @@ Modelos seguidos: `toski-labs-web` (estrutura, i18n, layout, acessibilidade) e `
 - Suporte: o botão "Escrever e-mail" abre um menu com Gmail e Outlook (nova aba, `rel="noopener noreferrer"`) e o app de e-mail; o `mailto:` sozinho não faz nada para quem não tem app de e-mail configurado. "Copiar e-mail" aparece só se o navegador tiver a API de área de transferência e avisa em `aria-live`.
 - Preços: "Em breve" / "Soon" até o lançamento na App Store (a Home não tem `offers` no JSON-LD).
 - Textos de SEO da Home (aprovados): ver "Textos alterados em relação ao canvas" abaixo.
-- `@id` da Organization: `https://toski-labs.web.app/#toski-labs` (o mesmo do toski-labs-web). O pethealth-web usa outro (`https://toski-labs.com.br/#organization`): os dois sites já divergem; alinhar quando a Toski Labs tiver domínio próprio.
+- `@id` da Organization: `https://toski-labs.web.app/#toski-labs` (o mesmo do toski-labs-web). O pawta-web usa outro (`https://toski-labs.com.br/#organization`): os dois sites já divergem; alinhar quando a Toski Labs tiver domínio próprio.
 - Tokens que o DS 0.5.3 ainda não exporta para a web, criados como variáveis locais em `src/styles/global.css` (bloco `TODO(ds)`): cartão "agora" do celular, moldura do celular, destaque do rodapé, selos Lista/Tarefa/Conta e avatar ameixa-claro. Pedir ao DS e apagar o bloco quando sair.
 
 ## Textos alterados em relação ao canvas (atualizar o canvas)
@@ -33,7 +33,7 @@ Modelos seguidos: `toski-labs-web` (estrutura, i18n, layout, acessibilidade) e `
 | 404 | Bilíngue (PT em cima, EN embaixo, com os botões "Ir para o início", "Suporte" e "Go to home"); o canvas tem um quadro por idioma |
 
 ## Fase 0 — Fundação ✅ (10 out 2026)
-Astro + TS strict + Tailwind 4 + DS com o tema Koti, Outfit local, i18n em `src/i18n/ui.ts`, `BaseLayout` com SEO (canonical, hreflang pt-BR/en/x-default, Open Graph e Twitter completos, `theme-color` claro/escuro, JSON-LD em `@graph`), Header, Footer, CSP em `<meta>` calculada pelo Astro, scripts de checagem copiados do pethealth-web.
+Astro + TS strict + Tailwind 4 + DS com o tema Koti, Outfit local, i18n em `src/i18n/ui.ts`, `BaseLayout` com SEO (canonical, hreflang pt-BR/en/x-default, Open Graph e Twitter completos, `theme-color` claro/escuro, JSON-LD em `@graph`), Header, Footer, CSP em `<meta>` calculada pelo Astro, scripts de checagem copiados do pawta-web.
 
 ## Fase 1 — Páginas ✅ (10 out 2026)
 Home (hero com celular, 6 recursos, destaque do mercado, "Sem iPhone", planos, detalhes e ajuda), Suporte (FAQ com 7 perguntas, menu de e-mail, copiar e-mail), Privacidade (10 seções, Markdown), 404.
@@ -62,7 +62,7 @@ Home (hero com celular, 6 recursos, destaque do mercado, "Sem iPhone", planos, d
 - Menu de tema e idioma verificado em navegador: o tema persiste ao recarregar, Esc fecha, os links PT↔EN apontam para a página equivalente.
 - Menu do e-mail verificado em navegador (PT e EN): Gmail e Outlook abrem em nova aba, fecha ao escolher, ao clicar fora e com Esc; "Copiar e-mail" muda para "E-mail copiado"/"Email copied", avisa no `aria-live` e volta em 2 s; sem a API de área de transferência o botão some e o e-mail continua visível.
 - Capturas 390 e 1280 px, claro e escuro, comparadas com as medidas do canvas (comparação feita contra o código do canvas, não lado a lado em imagem).
-- **Rodapé refeito com a estrutura do pethealth-web**: marca do Koti (ícone do DS + "Ko" em `footer-ink` e "ti" em Ameixa clara, `footer-accent`) com a frase "Listas, tarefas e contas da casa, juntos num lugar só."; coluna "Um app da Toski Labs" com `toski-labs.com.br`; coluna Ajuda (Suporte e Privacidade); linha de baixo com o ícone da Toski Labs e "© ano toski labs". Saíram a coluna Projetos, o link do PetHealthTracker e o "Recife, Brasil". Mantidos o botão "Voltar ao topo" no celular, o `aria-labelledby` nos `<nav>` e os alvos de toque de 44 px.
+- **Rodapé refeito com a estrutura do pawta-web**: marca do Koti (ícone do DS + "Ko" em `footer-ink` e "ti" em Ameixa clara, `footer-accent`) com a frase "Listas, tarefas e contas da casa, juntos num lugar só."; coluna "Um app da Toski Labs" com `toski-labs.com.br`; coluna Ajuda (Suporte e Privacidade); linha de baixo com o ícone da Toski Labs e "© ano toski labs". Saíram a coluna Projetos, o link do PetHealthTracker (hoje Pawta) e o "Recife, Brasil". Mantidos o botão "Voltar ao topo" no celular, o `aria-labelledby` nos `<nav>` e os alvos de toque de 44 px.
 - `main` do remoto sem commits novos antes do CI do rodapé: nada para fazer rebase (conferido em 10 out 2026).
 
 ### Não testado
